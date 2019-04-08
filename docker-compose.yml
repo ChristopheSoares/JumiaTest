@@ -1,0 +1,19 @@
+version: '2.3'
+
+services:
+    jumia-teste:
+      container_name: jumia-teste
+      build:
+        context: .
+        dockerfile: Dockerfile
+      ports:
+        - 1000:80
+      volumes:
+        - ./jumia:/var/www/html/
+        - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+
+    composer:
+      image: composer
+      volumes_from: [jumia-teste]
+      working_dir: /var/www/html
+      command: install
